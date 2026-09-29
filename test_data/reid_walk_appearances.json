@@ -1,0 +1,26 @@
+{
+  "_note": "TEMPLATE - one entry per person per camera, in the order they walked. Agent may not edit.",
+  "appearances": [
+    {
+      "person": "P1",
+      "camera": "cam01",
+      "clip": "reid_walk_cam1.mp4",
+      "start_s": 5,
+      "end_s": 12
+    },
+    {
+      "person": "P1",
+      "camera": "cam02",
+      "clip": "reid_walk_cam2.mp4",
+      "start_s": 20,
+      "end_s": 27
+    },
+    {
+      "person": "P1",
+      "camera": "cam03",
+      "clip": "reid_walk_cam3.mp4",
+      "start_s": 35,
+      "end_s": 42
+    }
+  ]
+}

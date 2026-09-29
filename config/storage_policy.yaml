@@ -1,0 +1,70 @@
+# storage_policy.yaml - loaded by backend/app/storage. Every setting says WHY and what to do if it fails.
+#
+# ARITHMETIC (3 cameras, 1080p ~4 Mbps each):
+#   1 camera  = 4 Mbps = 0.5 MB/s = ~1.8 GB/hour = ~43 GB/day
+#   3 cameras = ~130 GB/day
+#   Disk plan on 500 GB (matches the guide pie chart): continuous 24 h = 130 GB, OS+models+database = 50 GB,
+#   event clips up to 320 GB (this includes some free headroom; the 80%/90% watermarks protect it).
+#   One 15-min event clip @4 Mbps = ~450 MB -> ~700 clips of room. 20 events/day -> low-severity 14-day retention fits.
+#   Two days of continuous (260 GB) would starve event storage, so continuous = 24 h.
+#   If you need more continuous days: lower bitrate, record the substream, or add a disk (raise total_disk_gb).
+
+disk:
+  total_disk_gb: 500
+  reserve_gb: 50                 # OS, models, DB. If the disk is smaller than expected, lower continuous.hours first.
+  warn_at_percent: 80            # -> admin alert "disk_low"
+  emergency_at_percent: 90       # -> delete oldest continuous, then expired low clips. NEVER critical or pinned.
+
+paths:                           # relative to repo root; must be on the big drive
+  continuous: data/continuous
+  clips: data/clips
+  snapshots: data/snapshots
+  # If the path is unwritable at startup: refuse to start recording, raise system alert, keep live view running.
+
+continuous:
+  hours: 24                      # rolling window (WHY: pre-roll source + "what happened just before" lookup)
+  segment_seconds: 10            # 10 s segments make pre-roll trivial and limit loss on crash
+  container: mkv                 # crash-safe: a power cut does not corrupt earlier segments
+  copy_codec: true               # ffmpeg -c copy: near-zero CPU/GPU. If a camera's codec cannot be copied
+                                 # (e.g. odd audio), set audio off: -an. If segments are not keyframe-aligned,
+                                 # set camera keyframe interval to 1-2 s; fallback: re-encode with libx264 -g 25.
+  keyframe_interval_hint_s: 1     # fake cameras use ffmpeg -g 25 at 25 fps = keyframe every 1 s; real cameras: set I-frame interval 1-2 s
+  restart_backoff_s: [1, 2, 4, 8, 30]   # ffmpeg died/stream dropped -> restart; watchdog if no new segment in 3x segment_seconds
+
+clips:
+  pre_roll_seconds: 15           # clip starts trigger - 15 s (segments covering that range, concatenated with -c copy)
+  hold_seconds: 20               # keep recording this long after the trigger turns off (avoids fragmented clips)
+  extend_on_refire: true         # re-trigger during a clip extends it instead of creating a new event
+  max_clip_minutes: 120          # hard cap so an unattended clip cannot fill the disk
+  severity_default_minutes:      # editable per rule
+    low: 15
+    medium: 30
+    critical: 60                 # or until admin stops it (still bounded by max_clip_minutes)
+  admin_can_extend: true
+  container: mkv                 # export to mp4 on download (remux, no re-encode)
+  compute_sha256: true           # tamper evidence; log verification failures to audit_log
+  sidecar_metadata: true         # boxes/track/identity JSON per clip for overlay playback (no burned-in boxes)
+
+retention:                       # days to keep event clips (0 = keep until deleted)
+  low: 14
+  medium: 60
+  critical: 0
+  pinned_never_deleted: true
+  run_at: "03:30"                # daily job; also runs at emergency watermark
+  # If a delete fails (file locked): retry next run, log, do not block recording.
+
+backup:
+  enabled: false                 # placeholder: copy critical clips to a second drive/NAS
+  target_path: ""
+  # If target missing: log warning only.
+
+optional_compression:
+  h265_recompress_old_clips: false   # saves ~40% space; only run when GPU idle (night). Off by default.
+
+privacy:                         # PLACEHOLDERS for the department to fill in
+  data_owner: "TBD by department"
+  who_can_view: [owner, admin, incharge]
+  export_requires_role: admin
+  audit_log_views_and_exports: true
+  embedding_retention_days: 30   # identity embeddings expire unless the identity is confirmed and kept
+  face_recognition_enabled: false

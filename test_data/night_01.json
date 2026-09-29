@@ -1,0 +1,20 @@
+{
+  "_note": "TEMPLATE - fill in nulls after recording. Coordinates are fractions of the frame (0-1). Agent may not edit this file. Robustness check: report precision/recall only, no pass/fail.",
+  "clip": "night_01.mp4",
+  "report_only": true,
+  "rule": {
+    "template": "presence",
+    "classes": [
+      "person"
+    ],
+    "zone_polygon": null,
+    "min_seconds": 3
+  },
+  "expected_events": [
+    {
+      "start_s": null,
+      "end_s": null,
+      "tolerance_s": 2.0
+    }
+  ]
+}

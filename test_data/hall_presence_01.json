@@ -1,0 +1,36 @@
+{
+  "_note": "TEMPLATE - fill in nulls after recording. Coordinates are fractions of the frame (0-1). Agent may not edit this file.",
+  "clip": "hall_presence_01.mp4",
+  "rule": {
+    "template": "presence",
+    "classes": [
+      "person"
+    ],
+    "zone_polygon": [
+      [
+        0.1,
+        0.3
+      ],
+      [
+        0.9,
+        0.3
+      ],
+      [
+        0.95,
+        0.95
+      ],
+      [
+        0.05,
+        0.95
+      ]
+    ],
+    "min_seconds": 3
+  },
+  "expected_events": [
+    {
+      "start_s": 10.0,
+      "end_s": 18.0,
+      "tolerance_s": 2.0
+    }
+  ]
+}

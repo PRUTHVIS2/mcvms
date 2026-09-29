@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+data/
+dataset/
+runs/
+.env
+*.pt
+test_data/*.mp4
+frontend/dist/
+
+test_videos/

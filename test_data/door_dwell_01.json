@@ -1,0 +1,19 @@
+{
+  "_note": "TEMPLATE - fill in nulls after recording. Coordinates are fractions of the frame (0-1). Agent may not edit this file. start_s = second the person starts standing + 60.",
+  "clip": "door_dwell_01.mp4",
+  "rule": {
+    "template": "dwell",
+    "classes": [
+      "person"
+    ],
+    "zone_polygon": null,
+    "dwell_seconds": 60
+  },
+  "expected_events": [
+    {
+      "start_s": null,
+      "end_s": null,
+      "tolerance_s": 3.0
+    }
+  ]
+}

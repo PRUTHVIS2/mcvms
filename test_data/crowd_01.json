@@ -1,0 +1,6 @@
+{
+  "_note": "TEMPLATE - fill in nulls after recording. Coordinates are fractions of the frame (0-1). Agent may not edit this file. Tracking stress test: report ID switches only, no pass/fail.",
+  "clip": "crowd_01.mp4",
+  "report_only": true,
+  "expected_events": []
+}

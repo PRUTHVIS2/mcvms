@@ -1,0 +1,18 @@
+{
+  "_note": "TEMPLATE - fill in nulls after recording. Coordinates are fractions of the frame (0-1). Agent may not edit this file. Set zone_line as two points on the door line and direction convention by looking at the snapshot.",
+  "clip": "door_line_01.mp4",
+  "rule": {
+    "template": "line_crossing",
+    "classes": [
+      "person"
+    ],
+    "zone_line": null,
+    "direction": "either"
+  },
+  "expected_counts": {
+    "in": 3,
+    "out": 2
+  },
+  "expected_events": [],
+  "tolerance_s": 2.0
+}

@@ -1,0 +1,21 @@
+{
+  "_note": "TEMPLATE - fill in nulls after recording. Coordinates are fractions of the frame (0-1). Agent may not edit this file.",
+  "clip": "gate_line_01.mp4",
+  "rule": {
+    "template": "line_crossing",
+    "classes": [
+      "car",
+      "motorcycle",
+      "bus",
+      "truck"
+    ],
+    "zone_line": null,
+    "direction": "either"
+  },
+  "expected_counts": {
+    "in": 2,
+    "out": 1
+  },
+  "expected_events": [],
+  "tolerance_s": 2.0
+}
