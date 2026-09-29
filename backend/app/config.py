@@ -85,6 +85,11 @@ def load_settings() -> Settings:
     app_config = load_yaml_config(app_path, AppConfig)
     storage_policy = load_yaml_config(storage_path, StoragePolicy)
     
+    # Resolve paths absolutely against base_dir so they work from any cwd
+    storage_policy.paths.continuous = str((base_dir / storage_policy.paths.continuous).resolve())
+    storage_policy.paths.clips = str((base_dir / storage_policy.paths.clips).resolve())
+    storage_policy.paths.snapshots = str((base_dir / storage_policy.paths.snapshots).resolve())
+    
     return Settings(app_config=app_config, storage_policy=storage_policy)
 
 settings = load_settings()
