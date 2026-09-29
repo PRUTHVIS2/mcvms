@@ -42,9 +42,10 @@ def main():
         print_status("Ultralytics", "Not installed", False)
         
     # FFmpeg / FFprobe
-    def check_cmd(cmd):
+    def check_cmd(cmd, version_flag="-version"):
         try:
-            res = subprocess.run([cmd, "-version"], capture_output=True, text=True, check=True)
+            exe = shutil.which(cmd) or cmd
+            res = subprocess.run([exe, version_flag], capture_output=True, text=True, check=True)
             return res.stdout.split('\n')[0], True
         except Exception:
             return "Not found", False
@@ -55,8 +56,8 @@ def main():
     print_status("FFprobe", ffprobe_v[:30] + "...", ffprobe_ok)
     
     # Node / NPM
-    node_v, node_ok = check_cmd("node")
-    npm_v, npm_ok = check_cmd("npm")
+    node_v, node_ok = check_cmd("node", "--version")
+    npm_v, npm_ok = check_cmd("npm", "--version")
     print_status("Node", node_v, node_ok)
     print_status("NPM", npm_v, npm_ok)
     
