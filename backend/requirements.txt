@@ -1,0 +1,14 @@
+fastapi>=0.110.0
+uvicorn>=0.29.0
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+SQLAlchemy>=2.0.30
+ultralytics>=8.3.0
+opencv-python>=4.9.0
+av>=12.0.0
+torch>=2.2.0
+torchvision>=0.17.0
+colorama>=0.4.6
+pytest>=8.2.0
+ruff>=0.4.0
+requests>=2.31.0

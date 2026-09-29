@@ -1,0 +1,11 @@
+analysis_fps: 8
+timezone: "Asia/Kolkata"
+
+thresholds:
+  min_confidence: 0.6
+  min_box_px: 60
+  margin_frac: 0.05
+  match_threshold: 0.85
+  min_crops_confirm: 20
+
+gallery_policy: "persistent" # persistent or daily

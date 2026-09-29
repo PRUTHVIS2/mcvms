@@ -1,0 +1,13 @@
+# Travel times between cameras (in seconds)
+# Format:
+# camA:
+#   camB: 10
+cam01:
+  cam02: 0
+  cam03: 0
+cam02:
+  cam01: 0
+  cam03: 0
+cam03:
+  cam01: 0
+  cam02: 0
